@@ -1,4 +1,7 @@
-public class Word{
+import java.util.List;
+import java.util.ArrayList;
+
+public class Word2{
 
 
 	/**
@@ -6,38 +9,49 @@ public class Word{
 	* @param remaining remaining letters
 	*/
 
-	public static void permutation(String solution, String remaining){
-		if(remaining.length() == 0){
+	public static void combination(String solution, int k, String remaining){
+		if(solution.length() == k){
 			System.out.println(solution);
 		}
 
+		else if (remaining.length() == 0) {
+			return;
+		}
+
 		else{
-			for(int i =0 ;i < remaining.length(); i++){
-
-				char ch = remaining.charAt(i);
+			char ch = remaining.charAt(0);
 	
-				//create new strings to pass to the recursive method			
-				String  nextRemaining = remaining.substring(0, i) + remaining.substring(i+1);
-				String nextSolution = solution + ch;
-				
-				permutation(nextSolution, nextRemaining);
+			remaining = remaining.substring(1);
 
-			}
+			solution = solution + ch;
+
+			permutation(solution, remaining, k);
+
+			solution = solution.substring(0, solution.length() - 1);
+
+			combination(solution, remaining, k);
+
 		}
 	}
 
 	public static void main(String [] args){
+
+		int k = 2;
 
 		if(args.length != 1){
 			System.out.println("Usage: java Word yourword");
 			return;
 		}
 		
+		String word = args[0];
+
 		String word = new String(args[0]);
 
 		String empty = new String("");
 
-		permutation(empty, word);
+		combination(empty, word, k);
+
+	
 
 	}
 
